@@ -8,6 +8,8 @@ app = Flask(__name__)
 redis_host = os.environ.get("REDIS_HOST", "localhost")
 redis_post = int(os.environ.get("REDIS_PORT", 6379))
 
+r = redis.Redis(host=redis_host, port=redis_host, decode_responses=True)
+
 # TODO (Slide 23): connect to Redis with retry logic (a short loop with
 #   a few attempts and a short delay) so this app doesn't crash if Redis
 #   isn't ready yet. Don't just assume the connection works, call
