@@ -6,9 +6,7 @@ app = Flask(__name__)
 # TODO (Slide 17): read REDIS_HOST and REDIS_PORT from environment
 #   variables instead of hardcoding them. Use os.environ.get(...).
 redis_host = os.environ.get("REDIS_HOST", "localhost")
-redis_post = int(os.environ.get("REDIS_PORT", 6379))
-
-r = redis.Redis(host=redis_host, port=redis_host, decode_responses=True)
+redis_port = int(os.environ.get("REDIS_PORT", 6379))
 
 # TODO (Slide 23): connect to Redis with retry logic (a short loop with
 #   a few attempts and a short delay) so this app doesn't crash if Redis
@@ -16,10 +14,10 @@ r = redis.Redis(host=redis_host, port=redis_host, decode_responses=True)
 #   r.ping() and handle the failure case.
 for _ in range(5):
     try: 
-        r = redis.Redis(host=redis_host, port=redis_post)
+        r = redis.Redis(host=redis_host, port=redis_port,decode_responses=True)
         r.ping()
         break
-    except redis.ConnectError:
+    except redis.ConnectionError:
         time.sleep(2)
 else:
     raise RuntimeError("Redis unreachable")
