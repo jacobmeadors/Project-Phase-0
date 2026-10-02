@@ -56,8 +56,6 @@ def read_data():
     return jsonify({"value": value}), 200
 
 
-
-
 if __name__ == "__main__":
     # Do not change host="0.0.0.0" below. See Slide 19: if this is left
     # as Flask's default (127.0.0.1), your app only accepts connections
